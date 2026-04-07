@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/Assets/Script/BootLoader.cs">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/Assets/Script/BootLoader.cs" />
+              <option name="updatedContent" value="using System.Collections;&#10;using UnityEngine;&#10;using UnityEngine.SceneManagement;&#10;&#10;public class BootLoader : MonoBehaviour&#10;{&#10;    private static string initialSceneName;&#10;&#10;    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]&#10;    private static void Initialize()&#10;    {&#10;        // Armazena o nome da cena que estava aberta&#10;        Scene activeScene = SceneManager.GetActiveScene();&#10;        initialSceneName = activeScene.name;&#10;&#10;        // Inicia o processo de carregamento de cenas&#10;        SceneManager.LoadScene(&quot;_Boot&quot;, LoadSceneMode.Single);&#10;        &#10;        // Aguarda um frame e depois carrega a cena inicial e descarrega o boot&#10;        MonoBehaviour temp = new GameObject(&quot;BootLoaderTemp&quot;).AddComponent&lt;BootLoaderBehaviour&gt;();&#10;    }&#10;&#10;    public static string GetInitialSceneName()&#10;    {&#10;        return initialSceneName;&#10;    }&#10;}&#10;&#10;public class BootLoaderBehaviour : MonoBehaviour&#10;{&#10;    private int frameCount = 0;&#10;&#10;    private void Update()&#10;    {&#10;        frameCount++;&#10;        &#10;        // Espera 2 frames para garantir que _Boot foi completamente carregada&#10;        if (frameCount == 2)&#10;        {&#10;            // Carrega a cena original de forma aditiva&#10;            SceneManager.LoadScene(BootLoader.GetInitialSceneName(), LoadSceneMode.Additive);&#10;            frameCount++;&#10;        }&#10;        // Espera mais frames para garantir que a cena original foi carregada&#10;        else if (frameCount == 4)&#10;        {&#10;            // Descarrega a cena _Boot&#10;            SceneManager.UnloadSceneAsync(&quot;_Boot&quot;);&#10;            Destroy(gameObject);&#10;        }&#10;    }&#10;}&#10;&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
